@@ -75,6 +75,10 @@ ims/
 ├── .gitignore
 └── .gitattributes
 
+## Database Setup
+1. Open MySQL and create a new database named `internship_db`.
+2. Run the SQL script in `internship_db.sql` to create all tables.
+
 
 ### Future Enhancements
 
