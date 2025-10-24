@@ -47,14 +47,14 @@ export default function InternshipPosting() {
     try {
       const token = localStorage.getItem("token");
 
-      // ✅ Step 1: Create internship
+      //  Step 1: Create internship
       const res = await api.post("/internships", form, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       const internship_id = res.data.internship_id;
 
-      // ✅ Step 2: If test added, create test
+      //  Step 2: If test added, create test
       if (addTest) {
         const testData = {
           internship_id,
@@ -129,7 +129,7 @@ export default function InternshipPosting() {
             required
           />
 
-          {/* ✅ Toggle to attach test */}
+          {/*  Toggle to attach test */}
           <div className="flex items-center">
             <input
               type="checkbox"
@@ -140,7 +140,7 @@ export default function InternshipPosting() {
             <label className="font-semibold">Attach a Test (Optional)</label>
           </div>
 
-          {/* ✅ Conditional Test Section */}
+          {/*  Conditional Test Section */}
           {addTest && (
             <div className="border-t mt-4 pt-4 max-h-[60vh] overflow-y-auto">
               <h3 className="text-lg font-semibold mb-2 text-center">

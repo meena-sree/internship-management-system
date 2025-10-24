@@ -40,7 +40,7 @@ export default function CompanyApplications() {
     }
   };
 
-  // ✅ Helper to color code test scores
+  //  Helper to color code test scores
   const getScoreColor = (score) => {
     if (score === null || score === undefined) return "text-gray-500";
     if (score < 5) return "text-red-600 font-semibold";
@@ -134,7 +134,7 @@ export default function CompanyApplications() {
                 )}
               </td>
 
-              {/* ✅ New Test Score column */}
+              {/*  New Test Score column */}
               <td className="border border-gray-300 p-2 text-center">
                 {app.test_score !== null && app.test_score !== undefined ? (
                   <span className={getScoreColor(app.test_score)}>

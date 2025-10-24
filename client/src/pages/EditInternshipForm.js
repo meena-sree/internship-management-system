@@ -29,8 +29,8 @@ export default function EditInternshipForm({ internship, onClose, onUpdated }) {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      onUpdated(form); // ✅ notify parent
-      onClose();       // ✅ close modal
+      onUpdated(form); //  notify parent
+      onClose();       //  close modal
     } catch (err) {
       console.error("Error updating internship:", err);
     }

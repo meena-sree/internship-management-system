@@ -2,7 +2,7 @@ const Test = require("../models/test.model");
 const TestQuestion = require("../models/testQuestion.model");
 const TestResult = require("../models/testResult.model");
 
-// ✅ Company creates a test with questions
+//  Company creates a test with questions
 exports.createTest = async (req, res) => {
   try {
     const { internship_id, title, time_limit, questions } = req.body;
@@ -33,7 +33,7 @@ exports.getTestByInternship = async (req, res) => {
   }
 };
 
-// ✅ Student submits answers
+//  Student submits answers
 exports.submitTest = async (req, res) => {
   try {
     const { test_id, answers } = req.body;
@@ -55,7 +55,7 @@ exports.submitTest = async (req, res) => {
   }
 };
 
-// ✅ Get all results for a student
+// Get all results for a student
 exports.getStudentResults = async (req, res) => {
   try {
     const student_id = req.user.id;
@@ -66,7 +66,7 @@ exports.getStudentResults = async (req, res) => {
   }
 };
 
-// ✅ Get all results for a company
+// Get all results for a company
 exports.getCompanyResults = async (req, res) => {
   try {
     const company_id = req.user.id;

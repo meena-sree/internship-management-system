@@ -12,7 +12,7 @@ export default function CompanyDashboard() {
       </h1>
       <p className="mt-2 text-gray-700">This is your company dashboard.</p>
 
-      {/* ✅ Separate components */}
+      {/*  Separate components */}
       <CompanyApplications />
        <CompanyOffers /> 
     </div>

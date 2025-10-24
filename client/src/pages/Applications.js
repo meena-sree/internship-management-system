@@ -12,13 +12,13 @@ export default function Applications() {
     try {
       const token = localStorage.getItem("token");
 
-      // ✅ Fetch applications (with has_test)
+      //  Fetch applications (with has_test)
       const res = await api.get("/applications/student", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setApplications(res.data);
 
-      // ✅ Fetch student's test results
+      //  Fetch student's test results
       const resultRes = await api.get("/tests/results/student", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -28,11 +28,11 @@ export default function Applications() {
     }
   };
 
-  // ✅ Fetch once + also re-fetch when redirected from TakeTest
+  //  Fetch once + also re-fetch when redirected from TakeTest
   useEffect(() => {
     fetchApplications(); // fetch when page loads
 
-    // ✅ Re-fetch immediately when student completes a test
+    //  Re-fetch immediately when student completes a test
     const handleStorageChange = (e) => {
       if (e.key === "testCompleted") {
         fetchApplications(); // fetch fresh data
@@ -41,7 +41,7 @@ export default function Applications() {
 
     window.addEventListener("storage", handleStorageChange);
 
-    // ✅ Also handle direct navigation from TakeTest
+    //  Also handle direct navigation from TakeTest
     if (window.performance?.navigation?.type === 1 || location.pathname === "/student-dashboard") {
       fetchApplications();
     }
@@ -100,7 +100,7 @@ export default function Applications() {
                   {app.status}
                 </td>
 
-                {/* ✅ Test Column */}
+                {/*  Test Column */}
                 <td className="border border-gray-300 p-2 text-center">
                   {app.has_test ? (
                     testStatus ? (

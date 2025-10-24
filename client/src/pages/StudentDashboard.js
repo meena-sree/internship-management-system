@@ -11,7 +11,7 @@ export default function StudentDashboard() {
         🎓 Welcome, {user?.name} (Student)
       </h1>
       
-      {/* ✅ Separate components */}
+      {/*  Separate components */}
       <Applications />
       <Offers/>
     </div>

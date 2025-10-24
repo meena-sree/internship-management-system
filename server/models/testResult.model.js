@@ -2,7 +2,7 @@ const db = require("../config/db.config");
 
 const TestResult = {
   save: async (test_id, student_id, score) => {
-    // ✅ Step 1: Check if a record already exists
+    //  Step 1: Check if a record already exists
     const checkSql = `
       SELECT * FROM TestResults
       WHERE test_id = ? AND student_id = ?
@@ -10,11 +10,11 @@ const TestResult = {
     const [existing] = await db.query(checkSql, [test_id, student_id]);
 
     if (existing.length > 0) {
-      // ✅ Already attempted → don't overwrite
+      //  Already attempted → don't overwrite
       return { alreadyAttempted: true };
     }
 
-    // ✅ Step 2: Insert new test result
+    //  Step 2: Insert new test result
     const sql = `
       INSERT INTO TestResults (test_id, student_id, score)
       VALUES (?, ?, ?)

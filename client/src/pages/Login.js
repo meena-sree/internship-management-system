@@ -43,13 +43,13 @@ const Login = () => {
 
   return (
     <div className="flex flex-col justify-center items-center mt-10 bg-white">
-      {/* ✅ Tagline Section */}
+      {/* Tagline Section */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800">IMS</h1>
         <p className="text-lg text-gray-600">Where Talent Meets Opportunity</p>
       </div>
 
-      {/* ✅ Login Box */}
+      {/* Login Box */}
       <div className="bg-gray-300 shadow-lg rounded-lg w-96">
         {/* Tabs */}
         <div className="flex">

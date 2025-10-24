@@ -14,7 +14,7 @@ exports.createInternship = async (req, res) => {
 
     res.status(201).json({
       message: "Internship created successfully",
-      internship_id, // ✅ return this
+      internship_id, //  return this
     });
     } catch (err) {
     res.status(500).json({ message: "Error creating internship", error: err.message });

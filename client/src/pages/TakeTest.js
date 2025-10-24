@@ -54,10 +54,10 @@ export default function TakeTest() {
     setScore(res.data.score);
     setMessage("Test submitted successfully!");
 
-    // ✅ Trigger dashboard refresh immediately
+    // Trigger dashboard refresh immediately
     window.localStorage.setItem("testCompleted", Date.now().toString());
 
-    // ✅ Redirect instantly to dashboard
+    // Redirect instantly to dashboard
     navigate("/student-dashboard");
   } catch (err) {
     if (err.response?.status === 400) {

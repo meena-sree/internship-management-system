@@ -1,7 +1,7 @@
 const Application = require("../models/application.model");
 const Internship = require("../models/internship.model");
 const Notification = require("../models/notification.model");
-const Offer = require("../models/offer.model"); // ✅ import Offer model
+const Offer = require("../models/offer.model"); // import Offer model
 
 // Student applies for internship
 exports.apply = async (req, res) => {
@@ -15,17 +15,17 @@ exports.apply = async (req, res) => {
         .json({ message: "Internship ID and resume are required" });
     }
 
-    // ✅ Check for existing application
+    // Check for existing application
     const existing = await Application.findExisting(student_id, internship_id);
 
     if (existing) {
-      // ❌ Prevent reapply if already rejected or already applied
+      //  Prevent reapply if already rejected or already applied
       return res
         .status(400)
         .json({ message: "You cannot reapply or apply multiple times." });
     }
 
-    // ✅ First-time apply
+    // First-time apply
     await Application.create(student_id, internship_id, resume);
     res.status(201).json({ message: "Application submitted successfully" });
   } catch (err) {
@@ -81,15 +81,15 @@ exports.updateStatus = async (req, res) => {
         .json({ message: "Unauthorized to update this application" });
     }
 
-    // ✅ Update status in Applications table
+    // Update status in Applications table
     await Application.updateStatus(id, status);
 
-    // ✅ If status is "offered", also insert into InternshipOffers table
+    // If status is "offered", also insert into InternshipOffers table
     if (status === "offered") {
       await Offer.create(id); // create a row in InternshipOffers
     }
 
-    // ✅ Add notification for student
+    //  Add notification for student
     await Notification.create(
       app.student_id,
       `Your application status changed to ${status}`
