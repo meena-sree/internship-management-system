@@ -8,6 +8,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 // Test route
 app.get('/', (req, res) => {
@@ -57,3 +58,8 @@ app.use("/api/notifications", notificationRoutes);
 //offer
 const offerRoutes = require("./routes/offer.routes");
 app.use("/api/offers", offerRoutes);
+
+//admin
+const adminRoutes = require("./routes/admin.routes");
+app.use("/api/admin", adminRoutes);
+

@@ -11,6 +11,7 @@ import InternshipListings from './pages/InternshipListings';
 import Notifications from './pages/Notifications';
 import Offers from './pages/Offers';
 import TakeTest from './pages/TakeTest';
+import AdminDashboard from "./pages/AdminDashboard";
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -20,8 +21,8 @@ function App() {
       <Router>
         <Navbar />
         <main className="flex-grow">
-        <Routes>
-          
+          <Routes>
+
             <Route path="/" element={<Login />} />
             <Route path="/student-register" element={<StudentRegister />} />
             <Route path="/company-register" element={<CompanyRegister />} />
@@ -42,6 +43,14 @@ function App() {
               element={
                 <ProtectedRoute role="company">
                   <CompanyDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin-dashboard"
+              element={
+                <ProtectedRoute role="admin">
+                  <AdminDashboard />
                 </ProtectedRoute>
               }
             />
@@ -79,14 +88,9 @@ function App() {
             />
             <Route
               path="/notifications"
-              element={
-                <ProtectedRoute role="student">
-                  <Notifications />
-                </ProtectedRoute>
-              }
+              element={<Notifications />}
             />
-          
-        </Routes>
+          </Routes>
         </main>
         <Footer />
       </Router>

@@ -36,21 +36,24 @@ const Application = {
   },
 
 
-  findByCompany: async (company_id) => {
+ findByCompany: async (company_id) => {
   const sql = `
     SELECT 
-      a.application_id,
-      a.student_id,
-      a.internship_id,
-      a.status,
-      a.applied_at,
-      u.name AS student_name,
+      a.application_id, 
+      a.status, 
+      a.resume, 
+      a.applied_at, 
+      u.name AS student_name, 
+      u.email AS student_email, 
       i.title AS internship_title,
-      tr.score AS test_score
+      CASE 
+        WHEN tr.score IS NULL THEN NULL
+        ELSE tr.score
+      END AS test_score
     FROM Applications a
-    JOIN Internships i ON a.internship_id = i.internship_id
     JOIN Users u ON a.student_id = u.user_id
-    LEFT JOIN Tests t ON i.internship_id = t.internship_id
+    JOIN Internships i ON a.internship_id = i.internship_id
+    LEFT JOIN Tests t ON t.internship_id = i.internship_id
     LEFT JOIN TestResults tr ON tr.test_id = t.test_id AND tr.student_id = a.student_id
     WHERE i.company_id = ?
     ORDER BY a.applied_at DESC

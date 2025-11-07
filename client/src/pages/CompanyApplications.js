@@ -75,15 +75,19 @@ export default function CompanyApplications() {
                 {app.student_name}
               </td>
 
-              <td className="border border-gray-300 p-2">
-                <a
-                  href={app.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline"
-                >
-                  View Resume
-                </a>
+              <td className="border border-gray-300 p-2 text-center">
+                {app.resume ? (
+                  <a
+                    href={`http://localhost:5000${app.resume}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    View Resume
+                  </a>
+                ) : (
+                  "No resume"
+                )}
               </td>
 
               <td className="border border-gray-300 p-2">

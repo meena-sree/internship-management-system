@@ -1,10 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import api from "../utils/api";
 import { useNavigate, Link } from "react-router-dom";
 import { loginSuccess } from "../redux/authSlice";
 import { useDispatch } from "react-redux";
-
 
 const Login = () => {
   const [role, setRole] = useState("student"); // default tab
@@ -22,7 +20,8 @@ const Login = () => {
     try {
       const res = await api.post("/auth/login", form);
 
-      if (res.data.user.role !== role) {
+      // Allow admin to log in regardless of selected tab
+      if (res.data.user.role !== role && res.data.user.role !== "admin") {
         setMessage(`This account is registered as ${res.data.user.role}, not ${role}.`);
         return;
       }
@@ -33,8 +32,10 @@ const Login = () => {
       // Redirect based on role
       if (res.data.user.role === "student") {
         navigate("/student-dashboard");
-      } else {
+      } else if (res.data.user.role === "company") {
         navigate("/company-dashboard");
+      } else {
+        navigate("/admin-dashboard");
       }
     } catch (err) {
       setMessage(err.response?.data?.message || "Error");
@@ -69,6 +70,19 @@ const Login = () => {
           </button>
         </div>
 
+        {/* Admin tab — styled separately and centered */}
+        <div className="text-center py-2 border-t border-gray-200 bg-gray-100">
+          <button
+            className={`font-bold text-sm px-4 py-1 rounded ${role === "admin"
+              ? "bg-gray-300 text-black"
+              : "text-gray-700 hover:text-black"
+              }`}
+            onClick={() => setRole("admin")}
+          >
+            Admin
+          </button>
+        </div>
+
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <input
@@ -96,22 +110,24 @@ const Login = () => {
 
           {message && <p className="text-center mt-2">{message}</p>}
 
-          <div className="text-center mt-4">
-            Don’t have an account?{" "}
-            {role === "student" ? (
-              <Link to="/student-register" className="text-blue-600 hover:underline">
-                Register as Student
-              </Link>
-            ) : (
-              <Link to="/company-register" className="text-blue-600 hover:underline">
-                Register as Company
-              </Link>
-            )}
-          </div>
+          {role !== "admin" && (
+            <div className="text-center mt-4">
+              Don’t have an account?{" "}
+              {role === "student" ? (
+                <Link to="/student-register" className="text-blue-600 hover:underline">
+                  Register as Student
+                </Link>
+              ) : (
+                <Link to="/company-register" className="text-blue-600 hover:underline">
+                  Register as Company
+                </Link>
+              )}
+            </div>
+          )}
         </form>
       </div>
     </div>
   );
-}
+};
 
-export default Login
+export default Login;

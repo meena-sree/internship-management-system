@@ -19,7 +19,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      if (user?.role === "student") {
+      if (user?.role === "student" || user?.role === "company") {
         try {
           const token = localStorage.getItem("token");
           const res = await api.get("/notifications", {
@@ -87,7 +87,21 @@ export default function Navbar() {
             <Link to="/internships" className="hover:text-green-300">
               Internships
             </Link>
+            <Link to="/notifications" className="relative hover:text-blue-300">
+              Notifications
+              {unreadCount > 0 && (
+                <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full px-2">
+                  {unreadCount}
+                </span>
+              )}
+            </Link>
           </>
+        )}
+        
+        {user?.role === "admin" && (
+          <Link to="/admin-dashboard" className="hover:text-yellow-300">
+            Admin Dashboard
+          </Link>
         )}
 
         {/* Logout button (only when logged in) */}

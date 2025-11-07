@@ -8,7 +8,7 @@ export default function InternshipListings() {
   const [applications, setApplications] = useState([]);
   const [message, setMessage] = useState("");
   const { user } = useSelector((state) => state.auth);
-
+  const [selectedFile, setSelectedFile] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [selectedInternship, setSelectedInternship] = useState(null);
 
@@ -42,25 +42,23 @@ export default function InternshipListings() {
     fetchApplications();
   }, [user]);
 
-  const handleApply = async (internship_id) => {
+  const handleApply = async (internship_id, file) => {
     try {
-      const resume = prompt("Enter your resume link (Google Drive, OneDrive, etc.):");
-      if (!resume) return;
-
       const token = localStorage.getItem("token");
-      await api.post(
-        "/applications",
-        { internship_id, resume },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setMessage("Application submitted successfully!");
+      const formData = new FormData();
+      formData.append("internship_id", internship_id);
+      formData.append("resume", file);
 
-      const res = await api.get("/applications/student", {
-        headers: { Authorization: `Bearer ${token}` },
+      await api.post("/applications", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       });
-      setApplications(res.data);
+
+      alert("Application submitted successfully!");
     } catch (err) {
-      setMessage(err.response?.data?.message || "Error applying");
+      alert(err.response?.data?.message || "Error submitting application");
     }
   };
 
@@ -132,12 +130,22 @@ export default function InternshipListings() {
               {user?.role === "student" && (
                 <>
                   {status === null && (
-                    <button
-                      onClick={() => handleApply(internship.internship_id)}
-                      className="mt-4 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
-                    >
-                      Apply
-                    </button>
+                    <tr key={internship.internship_id}>
+                      <td>
+                        <input
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          onChange={(e) => setSelectedFile(e.target.files[0])}
+                          className="border p-1"
+                        />
+                        <button
+                          onClick={() => handleApply(internship.internship_id, selectedFile)}
+                          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 ml-2"
+                        >
+                          Apply
+                        </button>
+                      </td>
+                    </tr>
                   )}
 
                   {status === "rejected" && (
